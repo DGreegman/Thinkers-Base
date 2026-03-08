@@ -1,7 +1,7 @@
 import type { SchoolInfo, Stage, Stat, NavLink } from "@/types";
 
 export const schoolInfo: SchoolInfo = {
-  name:        "Greenleaf Academy",
+  name:        "Thinkers Base Academy",
   tagline:     "Every Child Belongs Here",
   description: "A nurturing school community where nursery, primary and secondary pupils grow together.",
   phone:       "+234 000 000 0000",
