@@ -7,20 +7,20 @@ import { ArrowRight } from "lucide-react";
 import { stages } from "@/data/content";
 import type { Stage } from "@/types";
 
-// ── Decorative illustrations per stage ───────────────────────────────────────
+// ── Updated stage illustrations ──────────────────────────────────────────────
 const stageIllustrations: Record<string, string> = {
-  nursery:   "🎨🧸🌻",
-  primary:   "📖🔭⚽",
-  secondary: "💻🎭🏆",
+  nursery: "🌱🧸🎨",
+  primary: "📚⚽🔭",
+  secondary: "🎓💻🏆",
 };
 
 // ── Individual stage card ─────────────────────────────────────────────────────
 function StageCard({ stage, index }: { stage: Stage; index: number }) {
-  const isNursery   = stage.id === "nursery";
-  const textColor   = isNursery ? "text-forest" : "text-white";
-  const mutedColor  = isNursery ? "text-forest/60" : "text-white/70";
-  const btnBg       = isNursery ? "bg-forest text-white" : "bg-white/20 text-white hover:bg-white/30";
-  const iconBg      = isNursery ? "bg-forest/10" : "bg-white/15";
+  const isNursery = stage.id === "nursery";
+  const textColor = isNursery ? "text-forest" : "text-white";
+  const mutedColor = isNursery ? "text-forest/70" : "text-white/70";
+  const btnBg = isNursery ? "bg-forest text-white" : "bg-white/20 text-white hover:bg-white/30";
+  const iconBg = isNursery ? "bg-forest/10" : "bg-white/15";
 
   return (
     <motion.div
@@ -43,12 +43,10 @@ function StageCard({ stage, index }: { stage: Stage; index: number }) {
           <span className="text-xl tracking-wider">{stageIllustrations[stage.id]}</span>
         </div>
 
-        {/* Age badge */}
+        {/* Stage / Curriculum badge */}
         <div className="mb-3">
-          <span
-            className={`font-poppins text-xs font-semibold ${mutedColor} uppercase tracking-widest`}
-          >
-            {stage.ages}
+          <span className={`font-poppins text-xs font-semibold ${mutedColor} uppercase tracking-widest`}>
+            {stage.classes} {/* Example: "Playgroup / Foundation Stage" */}
           </span>
         </div>
 
@@ -67,7 +65,7 @@ function StageCard({ stage, index }: { stage: Stage; index: number }) {
           href={stage.href}
           className={`inline-flex items-center gap-2 font-nunito font-bold text-sm px-5 py-2.5 rounded-button ${btnBg} transition-all group-hover:gap-3`}
         >
-          Explore {stage.id.charAt(0).toUpperCase() + stage.id.slice(1)}
+          Discover {stage.label} Learning
           <ArrowRight className="w-4 h-4" />
         </Link>
       </div>
@@ -110,17 +108,14 @@ export default function StageCards() {
             A Place for Every Child
           </h2>
           <p className="font-poppins text-charcoal/60 text-base max-w-xl mx-auto leading-relaxed">
-            From first steps into learning to launching careers — we walk with
-            your child every step of the way.
+            From first steps into learning to launching young minds — we provide a curriculum that grows with your child.
           </p>
         </motion.div>
 
         {/* Cards grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {inView &&
-            stages.map((stage, i) => (
-              <StageCard key={stage.id} stage={stage} index={i} />
-            ))}
+            stages.map((stage, i) => <StageCard key={stage.id} stage={stage} index={i} />)}
         </div>
       </div>
     </section>

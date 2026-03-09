@@ -1,6 +1,7 @@
 export type StageId = "nursery" | "primary" | "secondary";
 
 export interface Stage {
+  classes: ReactNode;
   id: StageId;
   label: string;
   emoji: string;

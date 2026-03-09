@@ -4,33 +4,33 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Star } from "lucide-react";
 
-// ── Testimonials data (replace with real content) ─────────────────────────────
+// ── Testimonials data ─────────────────────────────────────────────────────────
 const testimonials = [
   {
     quote:
-      "Moving our daughter to Greenleaf was the best decision we ever made. She went from dreading mornings to racing to school every day. The nursery teachers are incredibly warm and attentive.",
+      "Our daughter loves coming to Thinkers Base Academy. The nursery teachers are warm and attentive, and she’s blossoming academically and socially.",
     author: "Mrs. Adaeze Okonkwo",
     detail: "Parent of a Nursery pupil",
     stage: "nursery" as const,
-    stageColor: "#F4D03F",
+    stageColor: "#52B788",
     emoji: "🌱",
   },
   {
     quote:
-      "The primary school teachers genuinely know each child. My son was struggling with reading in Year 2 and within one term the difference was remarkable. This school doesn't let any child fall through the cracks.",
+      "The primary teachers really know each child. My son has improved tremendously in reading and confidence. Thinkers Base Academy doesn’t let any child fall behind.",
     author: "Mr. Chukwuemeka Nwosu",
     detail: "Parent of a Primary Year 3 pupil",
     stage: "primary" as const,
-    stageColor: "#5BA4CF",
+    stageColor: "#1B4332",
     emoji: "🎒",
   },
   {
     quote:
-      "My daughter sits her final exams this year with three university offers already confirmed. Secondary at Greenleaf didn't just prepare her academically — it built her confidence and character.",
+      "Secondary at Thinkers Base Academy prepared my daughter academically and personally. She is confident, independent, and ready for her future.",
     author: "Mrs. Funmi Adeola",
     detail: "Parent of a Secondary Year 12 pupil",
     stage: "secondary" as const,
-    stageColor: "#E8845C",
+    stageColor: "#3A6EA5",
     emoji: "📚",
   },
 ];
@@ -94,7 +94,6 @@ function TestimonialCard({
 
       {/* Author */}
       <div className="mt-5 pt-4 border-t border-gray-100 flex items-center gap-3">
-        {/* Avatar placeholder */}
         <div
           className="w-10 h-10 rounded-full flex items-center justify-center font-nunito font-extrabold text-sm flex-shrink-0"
           style={{
@@ -119,7 +118,9 @@ export default function Testimonials() {
   const inView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
-    <section ref={ref} className="py-20 relative overflow-hidden"
+    <section
+      ref={ref}
+      className="py-20 relative overflow-hidden"
       style={{ background: "linear-gradient(135deg, #F0FFF4 0%, #F8FFF4 50%, #FFF9E6 100%)" }}
     >
       {/* Decorative blobs */}
@@ -138,11 +139,11 @@ export default function Testimonials() {
             What Families Say
           </span>
           <h2 className="font-nunito font-extrabold text-3xl sm:text-4xl text-forest mb-4">
-            Trusted by Hundreds of Families
+            Trusted by Our Parents
           </h2>
           <p className="font-poppins text-charcoal/60 text-base max-w-lg mx-auto">
             Don't just take our word for it — hear from the parents who trust us
-            with their most precious people.
+            with their children’s learning journey.
           </p>
         </motion.div>
 
@@ -163,7 +164,7 @@ export default function Testimonials() {
           {[
             { value: "98%", label: "Parent satisfaction" },
             { value: "500+", label: "Happy families" },
-            { value: "15yrs", label: "Trusted since 2009" },
+            { value: "2019", label: "Since establishment" },
           ].map((item) => (
             <div key={item.label} className="flex flex-col items-center">
               <span className="font-nunito font-extrabold text-2xl text-forest">

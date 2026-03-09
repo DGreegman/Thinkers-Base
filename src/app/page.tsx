@@ -1,14 +1,10 @@
-import Hero         from "@/components/home/Hero";
-import StatsBar     from "@/components/home/StatsBar";
-import StageCards   from "@/components/home/StageCards";
-import Testimonials from "@/components/home/Testimonials";
-import { LatestEvents, CtaBanner } from "@/components/home/Eventsandcta";
+"use client";
 
-export const metadata = {
-  title: "Greenleaf Academy — Nursery, Primary & Secondary",
-  description:
-    "A nurturing school community where every child belongs. Nursery, Primary and Secondary education in one welcoming campus.",
-};
+import Hero from "@/components/home/Hero";
+import StatsBar from "@/components/home/StatsBar";
+import StageCards from "@/components/home/StageCards";
+import Testimonials from "@/components/home/Testimonials";
+import Eventsandcta from "@/components/home/Eventsandcta";
 
 export default function HomePage() {
   return (
@@ -17,8 +13,8 @@ export default function HomePage() {
       <StatsBar />
       <StageCards />
       <Testimonials />
-      <LatestEvents />
-      <CtaBanner />
+      <Eventsandcta />
+      
     </>
   );
 }
