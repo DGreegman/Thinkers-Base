@@ -16,11 +16,10 @@ const stageIllustrations: Record<string, string> = {
 
 // ── Individual stage card ─────────────────────────────────────────────────────
 function StageCard({ stage, index }: { stage: Stage; index: number }) {
-  const isNursery = stage.id === "nursery";
-  const textColor = isNursery ? "text-forest" : "text-white";
-  const mutedColor = isNursery ? "text-forest/70" : "text-white/70";
-  const btnBg = isNursery ? "bg-forest text-white" : "bg-white/20 text-white hover:bg-white/30";
-  const iconBg = isNursery ? "bg-forest/10" : "bg-white/15";
+  const textColor = "text-forest";
+  const mutedColor = "text-forest/70";
+  const btnBg = "bg-forest text-white hover:bg-forest/90";
+  const iconBg = "bg-forest/10";
 
   return (
     <motion.div
@@ -33,8 +32,8 @@ function StageCard({ stage, index }: { stage: Stage; index: number }) {
     >
       {/* Background blob */}
       <div
-        className="absolute -top-10 -right-10 w-40 h-40 rounded-full opacity-20 pointer-events-none"
-        style={{ backgroundColor: isNursery ? "#1B4332" : "#ffffff" }}
+        className="absolute -top-10 -right-10 w-40 h-40 rounded-full opacity-10 pointer-events-none"
+        style={{ backgroundColor: "#1B4332" }}
       />
 
       <div className="relative p-7">
@@ -72,8 +71,8 @@ function StageCard({ stage, index }: { stage: Stage; index: number }) {
 
       {/* Bottom accent line */}
       <div
-        className="absolute bottom-0 left-0 right-0 h-1 opacity-30"
-        style={{ backgroundColor: isNursery ? "#1B4332" : "#ffffff" }}
+        className="absolute bottom-0 left-0 right-0 h-1 opacity-20"
+        style={{ backgroundColor: "#1B4332" }}
       />
     </motion.div>
   );

@@ -21,8 +21,8 @@ export const stages: Stage[] = [
     color: "#F4D03F", // Use hex to match type
     description: "A safe, warm space where your child takes their first steps into learning through play.",
     href: "/nursery",
-    classes: undefined,
-    hex: ""
+    classes: "Playgroup / Foundation Stage",
+    hex: "#FEF9E7"
   },
   {
     id: "primary",
@@ -32,8 +32,8 @@ export const stages: Stage[] = [
     color: "#5BA4CF",
     description: "Curious minds, big questions and the skills to find the answers.",
     href: "/primary",
-    classes: undefined,
-    hex: ""
+    classes: "Years 1 – 6",
+    hex: "#EBF5FB"
   },
   {
     id: "secondary",
@@ -43,8 +43,8 @@ export const stages: Stage[] = [
     color: "#E8845C",
     description: "Ambitious, supported and ready to shape the world.",
     href: "/secondary",
-    classes: undefined,
-    hex: ""
+    classes: "JSS1 – SS3",
+    hex: "#FDF2E9"
   },
 ];
 
