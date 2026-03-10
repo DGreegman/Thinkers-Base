@@ -25,6 +25,30 @@ function LeafPattern() {
   );
 }
 
+// ── Floating photo card ───────────────────────────────────────────────────────
+function PhotoCard({
+  src,
+  alt,
+  className,
+  delay,
+}: {
+  src: string;
+  alt: string;
+  className: string;
+  delay: number;
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.9, y: 20 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      transition={{ delay, duration: 0.6, ease: "easeOut" }}
+      className={`absolute rounded-2xl overflow-hidden shadow-xl shadow-forest/30 border-4 border-white ${className}`}
+    >
+      <Image src={src} alt={alt} fill className="object-cover" />
+    </motion.div>
+  );
+}
+
 function StagePill({ emoji, label, hex }: { emoji: string; label: string; hex: string }) {
   return (
     <span
@@ -92,7 +116,7 @@ export default function Hero() {
               transition={{ delay: 0.5 }}
               className="font-poppins text-charcoal/70 text-lg leading-relaxed mb-8 max-w-lg"
             >
-              At Thinkers Base Academy, we provide high-quality nursery and primary education in a safe, 
+              At Thinkers Base Academy, we provide high-quality nursery and primary education in a safe,
               inclusive environment where every child is valued, inspired to learn, and supported to reach their full potential.
             </motion.p>
 
@@ -137,47 +161,85 @@ export default function Hero() {
             <motion.div
               initial={{ opacity: 0, scale: 0.92 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.2, duration: 0.7 }}
+              transition={{ delay: 0.2, duration: 0.7, ease: "easeOut" }}
               className="absolute top-0 left-8 right-0 h-[300px] rounded-3xl overflow-hidden shadow-2xl shadow-forest/20 border-4 border-white"
             >
-              <Image
-                src="/images/primary.jpg"
-                alt="Primary class learning"
-                fill
-                className="object-cover"
-              />
+              <div className="w-full h-full bg-gradient-to-br from-leaf/30 to-primary/30 flex items-center justify-center">
+                {/* Replace with actual Image component once you have photos */}
+                <div className="text-center">
+                  <span className="text-6xl">🎒</span>
+                  <p className="font-nunito font-bold text-forest/50 mt-2 text-sm">
+                    Primary class photo
+                  </p>
+                </div>
+              </div>
             </motion.div>
 
             {/* NURSERY IMAGE */}
             <motion.div
               initial={{ opacity: 0, x: -20, y: 20 }}
               animate={{ opacity: 1, x: 0, y: 0 }}
-              transition={{ delay: 0.45 }}
+              transition={{ delay: 0.45, duration: 0.6, ease: "easeOut" }}
               className="absolute bottom-0 left-0 w-44 h-44 rounded-2xl overflow-hidden shadow-xl shadow-forest/20 border-4 border-white"
             >
-              <Image
-                src="/images/nursery.jpg"
-                alt="Nursery students playing"
-                fill
-                className="object-cover"
-              />
+              <div className="w-full h-full bg-gradient-to-br from-nursery/40 to-nursery/20 flex items-center justify-center">
+                <div className="text-center">
+                  <span className="text-4xl">🌱</span>
+                  <p className="font-nunito font-bold text-forest/50 mt-1 text-xs">
+                    Nursery play
+                  </p>
+                </div>
+              </div>
             </motion.div>
 
             {/* SECONDARY IMAGE */}
             <motion.div
               initial={{ opacity: 0, x: 20, y: 20 }}
               animate={{ opacity: 1, x: 0, y: 0 }}
-              transition={{ delay: 0.6 }}
+              transition={{ delay: 0.6, duration: 0.6, ease: "easeOut" }}
               className="absolute bottom-4 right-0 w-48 h-40 rounded-2xl overflow-hidden shadow-xl shadow-forest/20 border-4 border-white"
             >
-              <Image
-                src="/images/secondary.jpg"
-                alt="Secondary science lab"
-                fill
-                className="object-cover"
-              />
+              <div className="w-full h-full bg-gradient-to-br from-secondary/30 to-secondary/10 flex items-center justify-center">
+                <div className="text-center">
+                  <span className="text-4xl">📚</span>
+                  <p className="font-nunito font-bold text-forest/50 mt-1 text-xs">
+                    Secondary lab
+                  </p>
+                </div>
+              </div>
             </motion.div>
 
+            {/* Floating achievement badge */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.9, type: "spring", stiffness: 200 }}
+              className="absolute top-6 right-4 bg-white rounded-2xl px-3 py-2 shadow-lg shadow-forest/15 border border-leaf/20"
+            >
+              <div className="flex items-center gap-2">
+                <span className="text-lg">🏆</span>
+                <div>
+                  <p className="font-nunito font-extrabold text-forest text-xs">Top School</p>
+                  <p className="font-poppins text-charcoal/50 text-[10px]">2024 Award</p>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Floating happy stat */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 1.05, type: "spring", stiffness: 200 }}
+              className="absolute bottom-32 -left-4 bg-nursery rounded-2xl px-3 py-2 shadow-lg"
+            >
+              <div className="flex items-center gap-2">
+                <span className="text-lg">😊</span>
+                <div>
+                  <p className="font-nunito font-extrabold text-forest text-xs">98% Happy</p>
+                  <p className="font-poppins text-forest/60 text-[10px]">Parent survey</p>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </div>
       </div>

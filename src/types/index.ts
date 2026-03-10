@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export type StageId = "nursery" | "primary" | "secondary";
 
 export interface Stage {

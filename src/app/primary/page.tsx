@@ -1,4 +1,4 @@
-npm installimport ComingSoon from "@/components/shared/Comingsoon";
+import ComingSoon from "@/components/shared/Comingsoon";
 
 export const metadata = { title: "Primary School — Greenleaf Academy" };
 
