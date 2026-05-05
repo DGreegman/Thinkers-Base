@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, Mail } from "lucide-react";
-import type { StageId } from "@/types";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Types
@@ -17,7 +16,7 @@ interface ComingSoonProps {
   /** Emoji to display large in the hero */
   emoji: string;
   /** Optional: school stage for accent colouring */
-  stage?: StageId | "all";
+  stage?: "nursery" | "primary" | "secondary" | "all";
   /** Bullet list of features that will be on this page */
   comingFeatures?: string[];
 }
