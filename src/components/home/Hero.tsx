@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Sparkles } from "lucide-react";
 
-// ── Animated headline ───────────────────────────────────────────────────────
 function AnimatedHeadline({ text }: { text: string }) {
   const words = text.split(" ");
   return (
@@ -25,21 +24,77 @@ function AnimatedHeadline({ text }: { text: string }) {
   );
 }
 
-// ── Hero Section ───────────────────────────────────────────────────────────
 export default function Hero() {
   return (
     <section className="relative bg-cream overflow-hidden min-h-[88vh] flex items-center">
 
-      {/* Soft background glow shapes */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-leaf/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-64 h-64 bg-nursery/15 rounded-full blur-2xl translate-y-1/3 -translate-x-1/4 pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-16 lg:py-24">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+        <div className="grid lg:grid-cols-2 gap-8 items-center">
 
-          {/* LEFT SIDE */}
+          {/* ── MOBILE IMAGES — below lg only ── */}
+          <div className="lg:hidden w-full">
+
+            {/* Main image */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.1, duration: 0.6 }}
+              className="relative w-full h-56 sm:h-64 rounded-2xl overflow-hidden shadow-xl border-4 border-white mb-4"
+            >
+              <Image
+                src="/images/madam daughter lying down.jpeg"
+                alt="Thinkers Base Academy pupils"
+                fill
+                className="object-cover"
+                priority
+              />
+            </motion.div>
+
+            {/* Bottom two — absolutely positioned inside a relative container */}
+            <div className="relative w-full h-40">
+
+              {/* LEFT */}
+              <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.25, duration: 0.5 }}
+                className="absolute top-0 bottom-0 left-0 rounded-xl overflow-hidden shadow-lg border-4 border-white"
+                style={{ right: "52%" }}
+              >
+                <Image
+                  src="/images/Clean background of a student with laptop.jpeg"
+                  alt="Pupil operating computer Thinkers Base Academy"
+                  fill
+                  className="object-cover"
+                />
+              </motion.div>
+
+              {/* RIGHT */}
+              <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.35, duration: 0.5 }}
+                className="absolute top-0 bottom-0 right-0 rounded-xl overflow-hidden shadow-lg border-4 border-white"
+                style={{ left: "52%" }}
+              >
+                <Image
+                  src="/images/Pupils holding nig flag.jpeg"
+                  alt="Grade School class at Thinkers Base Academy"
+                  fill
+                  className="object-cover"
+                />
+              </motion.div>
+
+            </div>
+
+          </div>
+          {/* ── END MOBILE IMAGES ── */}
+
+          {/* LEFT — text */}
           <div className="relative z-10">
-
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -65,7 +120,6 @@ export default function Hero() {
               and supported to reach their full potential.
             </motion.p>
 
-            {/* CTA Buttons */}
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
@@ -81,7 +135,6 @@ export default function Hero() {
                 Apply for Admission
                 <ArrowRight className="w-4 h-4" />
               </a>
-
               <Link
                 href="/about"
                 className="inline-flex items-center gap-2 bg-leaf text-white font-nunito font-bold text-sm px-6 py-3 rounded-button hover:bg-leaf/90 hover:-translate-y-0.5 transition-all shadow-lg shadow-leaf/25"
@@ -89,22 +142,21 @@ export default function Hero() {
                 Explore Our School
               </Link>
             </motion.div>
-
           </div>
-          {/* END LEFT SIDE */}
+          {/* END LEFT */}
 
-          {/* RIGHT SIDE IMAGES */}
-          <div className="relative h-[420px] lg:h-[520px] hidden sm:block">
+          {/* ── DESKTOP IMAGES — lg and above only ── */}
+          <div className="relative h-[420px] lg:h-[520px] hidden lg:block">
 
-            {/* MAIN IMAGE — top */}
+            {/* MAIN IMAGE */}
             <motion.div
               initial={{ opacity: 0, scale: 0.92 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2, duration: 0.7, ease: "easeOut" }}
-              className="absolute top-0 left-8 right-0 h-[270px] rounded-3xl overflow-hidden shadow-2xl shadow-forest/20 border-4 border-white"
+              className="absolute top-0 left-8 right-0 h-[280px] rounded-3xl overflow-hidden shadow-2xl shadow-forest/20 border-4 border-white"
             >
               <Image
-                src="/images/bts1.jpg"
+                src="/images/madam daughter lying down.jpeg"
                 alt="Thinkers Base Academy pupils"
                 fill
                 className="object-cover"
@@ -112,32 +164,32 @@ export default function Hero() {
               />
             </motion.div>
 
-            {/* BOTTOM LEFT IMAGE */}
+            {/* BOTTOM LEFT — ends at 49% leaving a gap before right starts at 51% */}
             <motion.div
               initial={{ opacity: 0, x: -20, y: 20 }}
               animate={{ opacity: 1, x: 0, y: 0 }}
               transition={{ delay: 0.45, duration: 0.6, ease: "easeOut" }}
-              className="absolute bottom-0 left-8 h-48 rounded-2xl overflow-hidden shadow-xl shadow-forest/20 border-4 border-white"
-              style={{ width: "calc(50% - 18px)" }}
+              className="absolute bottom-0 top-[300px] left-8 rounded-2xl overflow-hidden shadow-xl shadow-forest/20 border-4 border-white"
+              style={{ right: "51%" }}
             >
               <Image
-                src="/images/P2.webp"
+                src="/images/Clean background of a student with laptop.jpeg"
                 alt="Pre School pupils at Thinkers Base Academy"
                 fill
                 className="object-cover"
               />
             </motion.div>
 
-            {/* BOTTOM RIGHT IMAGE */}
+            {/* BOTTOM RIGHT — starts at 51% */}
             <motion.div
               initial={{ opacity: 0, x: 20, y: 20 }}
               animate={{ opacity: 1, x: 0, y: 0 }}
               transition={{ delay: 0.6, duration: 0.6, ease: "easeOut" }}
-              className="absolute bottom-0 right-0 h-48 rounded-2xl overflow-hidden shadow-xl shadow-forest/20 border-4 border-white"
-              style={{ width: "calc(50% - 18px)" }}
+              className="absolute bottom-0 top-[300px] right-0 rounded-2xl overflow-hidden shadow-xl shadow-forest/20 border-4 border-white"
+              style={{ left: "51%" }}
             >
               <Image
-                src="/images/bts3.jpg"
+                src="/images/student with mini microscope.jpeg"
                 alt="Grade School class at Thinkers Base Academy"
                 fill
                 className="object-cover"
@@ -145,7 +197,7 @@ export default function Hero() {
             </motion.div>
 
           </div>
-          {/* END RIGHT SIDE IMAGES */}
+          {/* ── END DESKTOP IMAGES ── */}
 
         </div>
       </div>

@@ -24,7 +24,7 @@ const stages: Stage[] = [
     classes: "Playgroup / Foundation Stage",
     hex: "#FEF9E7",
     // ↓ Replace this filename with your actual creche card image
-    image: "/images/P3.webp",
+    image: "/images/P2.webp",
   },
   {
     id: "Pre School",
@@ -37,7 +37,7 @@ const stages: Stage[] = [
     classes: "Years 4 – 6",
     hex: "#EBF5FB",
     // ↓ Replace this filename with your actual pre-school card image
-    image: "/images/P2.webp",
+    image: "/images/small pupils in uniform.jpeg",
   },
   {
     id: "Grade School",
@@ -50,7 +50,7 @@ const stages: Stage[] = [
     classes: "Grade 1 – Grade 5",
     hex: "#FDF2E9",
     // ↓ Replace this filename with your actual grade school card image
-    image: "/images/Pupils in class.jpg",
+    image: "/images/Grade 3 pupils with computer.jpeg",
   },
 ];
 export default stages;
