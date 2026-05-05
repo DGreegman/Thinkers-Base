@@ -409,7 +409,7 @@ function OurPrinciple() {
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
           {classyValues.map((item, i) => (
-            <motion.div key={item.letter} initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ delay: i * 0.1, duration: 0.5 }} className="bg-white rounded-card p-6 text-center shadow-card hover:shadow-card-hover transition-shadow">
+            <motion.div key={`${item.letter}-${i}`} initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ delay: i * 0.1, duration: 0.5 }} className="bg-white rounded-card p-6 text-center shadow-card hover:shadow-card-hover transition-shadow">
               <div className="w-16 h-16 rounded-full bg-forest mx-auto mb-4 flex items-center justify-center">
                 <span className="font-nunito font-extrabold text-2xl text-white">{item.letter}</span>
               </div>

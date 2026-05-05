@@ -12,6 +12,7 @@ export interface Stage {
   hex: string;
   description: string;
   href: string;
+  image: string;
 }
 
 export interface Stat {
