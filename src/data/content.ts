@@ -6,54 +6,61 @@ export const schoolInfo: SchoolInfo = {
   tagline:     "Every Child Belongs Here",
   description: "A nurturing school community where nursery, primary and secondary pupils grow together.",
   phone:       "+2348037134462",
-  email:       "hello@thinkersbaseacademy.edu",
+  email:       "thinkersbaseacademy@gmail.com",
   address:     "Plot 183A/B Mary Emmanuel Street New GRA Trans-Ekulu, Enugu.",
   hours:       "Monday – Friday: 7:30am – 5:00pm",
 };
 
 // ── Stages ───────────────────────────────────────────────────────────────────
-export const stages: Stage[] = [
+const stages: Stage[] = [
   {
-    id: "nursery",
+    id: "Creche",
     label: "Little Learners",
     emoji: "🌱",
-    ages: "Ages 2 – 5",
-    color: "#F4D03F", // Use hex to match type
+    ages: "Ages 1 – 4",
+    color: "#F4D03F",
     description: "A safe, warm space where your child takes their first steps into learning through play.",
-    href: "/nursery",
+    href: "/creche",
     classes: "Playgroup / Foundation Stage",
-    hex: "#FEF9E7"
+    hex: "#FEF9E7",
+    // ↓ Replace this filename with your actual creche card image
+    image: "/images/P3.webp",
   },
   {
-    id: "primary",
+    id: "Pre School",
     label: "Big Adventurers",
     emoji: "🎒",
-    ages: "Ages 5 – 11",
+    ages: "Ages 4 – 6",
     color: "#5BA4CF",
     description: "Curious minds, big questions and the skills to find the answers.",
-    href: "/primary",
-    classes: "Years 1 – 6",
-    hex: "#EBF5FB"
+    href: "/pre-school",
+    classes: "Years 4 – 6",
+    hex: "#EBF5FB",
+    // ↓ Replace this filename with your actual pre-school card image
+    image: "/images/P2.webp",
   },
   {
-    id: "secondary",
+    id: "Grade School",
     label: "Future Leaders",
     emoji: "📚",
-    ages: "Ages 11 – 18",
+    ages: "Ages 6 – 12",
     color: "#E8845C",
     description: "Ambitious, supported and ready to shape the world.",
-    href: "/secondary",
-    classes: "JSS1 – SS3",
-    hex: "#FDF2E9"
+    href: "/grade-school",
+    classes: "Grade 1 – Grade 5",
+    hex: "#FDF2E9",
+    // ↓ Replace this filename with your actual grade school card image
+    image: "/images/Pupils in class.jpg",
   },
 ];
+export default stages;
 
 // ── Stats ────────────────────────────────────────────────────────────────────
 export const stats: Stat[] = [
-  { label: "Nursery Pupils",      value: 120, emoji: "🌱" },
-  { label: "Primary Pupils",      value: 480, emoji: "🎒" },
-  { label: "Secondary Pupils",    value: 350, emoji: "📚" },
-  { label: "Years of Excellence", value: 15,  emoji: "🏆" },
+  { label: "Creche",            value: 120, emoji: "🌱" },
+  { label: "Pre School Pupils", value: 480, emoji: "🎒" },
+  { label: "Grade School Pupils", value: 350, emoji: "📚" },
+  { label: "Years of Excellence", value: 15, emoji: "🏆" },
 ];
 
 // ── Navigation links ─────────────────────────────────────────────────────────
@@ -64,9 +71,9 @@ export const navLinks: NavLink[] = [
     label: "Our School",
     href: "#",
     children: [
-      { label: "🌱 Nursery",   href: "/nursery" },
-      { label: "🎒 Primary",   href: "/primary" },
-      { label: "📚 Secondary", href: "/secondary" },
+      { label: "🌱 Creche",       href: "/creche" },
+      { label: "🎒 Pre School",   href: "/pre-school" },
+      { label: "📚 Grade School", href: "/grade-School" },
     ],
   },
   { label: "Admissions",  href: "/admissions" },

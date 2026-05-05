@@ -1,21 +1,21 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
 import {
-  Leaf,
+  School,
   MapPin,
   Phone,
   Mail,
   Clock,
   Facebook,
   Instagram,
-  Youtube,
-  Twitter,
+  
 } from "lucide-react";
-import { schoolInfo, stages, navLinks } from "@/data/content";
 
-// ── Wave SVG divider ──────────────────────────────────────────────────────────
+import stages, { schoolInfo, navLinks } from "@/data/content";
+
+
+/* Wave divider */
 function WaveTop() {
   return (
     <div className="w-full overflow-hidden leading-none -mb-px">
@@ -34,7 +34,8 @@ function WaveTop() {
   );
 }
 
-// ── Social icon button ────────────────────────────────────────────────────────
+
+/* Social Button */
 function SocialBtn({
   href,
   icon: Icon,
@@ -57,19 +58,27 @@ function SocialBtn({
   );
 }
 
-// ── Footer link ───────────────────────────────────────────────────────────────
-function FooterLink({ href, children }: { href: string; children: React.ReactNode }) {
+
+/* Footer link */
+function FooterLink({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) {
   return (
     <Link
       href={href}
-      className="text-white/60 hover:text-nursery text-sm font-poppins transition-colors duration-150 hover:translate-x-1 inline-block"
+      className="text-white/60 hover:text-nursery text-sm transition-colors duration-150"
     >
       {children}
     </Link>
   );
 }
 
-// ── Contact row ───────────────────────────────────────────────────────────────
+
+/* Contact row */
 function ContactRow({
   icon: Icon,
   children,
@@ -79,15 +88,16 @@ function ContactRow({
 }) {
   return (
     <div className="flex items-start gap-3">
-      <div className="mt-0.5 w-7 h-7 flex-shrink-0 flex items-center justify-center rounded-full bg-leaf/20">
-        <Icon className="w-3.5 h-3.5 text-nursery" />
+      <div className="mt-0.5 w-7 h-7 flex items-center justify-center rounded-full bg-white/10">
+        <Icon className="w-4 h-4 text-nursery" />
       </div>
-      <span className="text-white/70 text-sm font-poppins leading-relaxed">{children}</span>
+      <span className="text-white/70 text-sm leading-relaxed">{children}</span>
     </div>
   );
 }
 
-// ── Main Footer ───────────────────────────────────────────────────────────────
+
+/* Main Footer */
 export default function Footer() {
   const year = new Date().getFullYear();
 
@@ -96,64 +106,58 @@ export default function Footer() {
       <WaveTop />
 
       <footer className="bg-forest text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-6">
+        <div className="max-w-7xl mx-auto px-6 pt-12 pb-6">
 
-          {/* Main grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 pb-10 border-b border-white/10">
 
-            {/* Col 1 — Brand */}
-            <div className="lg:col-span-1">
-              {/* Logo */}
-              <Link href="/" className="flex items-center gap-2 group mb-4">
-                <div className="relative w-10 h-10">
-                  <div className="absolute inset-0 bg-leaf rounded-full opacity-25 group-hover:opacity-40 transition-opacity" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <Leaf className="w-5 h-5 text-nursery fill-nursery" />
-                  </div>
-                </div>
+            {/* Brand */}
+            <div>
+              <Link href="/" className="flex items-center gap-3 mb-4">
+                <School className="w-8 h-8 text-nursery" />
+
                 <div className="flex flex-col leading-none">
-                  <span className="font-nunito font-extrabold text-white text-base tracking-tight">
+                  <span className="font-bold text-lg">
                     {schoolInfo.name}
                   </span>
-                  <span className="font-poppins text-leaf text-[10px] tracking-widest uppercase">
-                    Growing Minds
+                  <span className="text-xs text-white/60">
+                    Excellence in Education
                   </span>
                 </div>
               </Link>
 
-              <p className="text-white/60 text-sm font-poppins leading-relaxed mb-5">
+              <p className="text-white/60 text-sm mb-5">
                 {schoolInfo.description}
               </p>
 
-              {/* Stage pills */}
-              <div className="flex flex-wrap gap-2 mb-6">
-                {stages.map((s) => (
-                  <Link
-                    key={s.id}
-                    href={s.href}
-                    className="text-xs font-nunito font-bold px-3 py-1 rounded-button transition-all hover:opacity-90 hover:-translate-y-0.5"
-                    style={{ backgroundColor: s.hex, color: s.id === "nursery" ? "#1B4332" : "#fff" }}
-                  >
-                    {s.emoji} {s.id.charAt(0).toUpperCase() + s.id.slice(1)}
-                  </Link>
-                ))}
-              </div>
-
-              {/* Social icons */}
+              {/* Social Media */}
               <div className="flex gap-2">
-                <SocialBtn href="#" icon={Facebook}  label="Facebook"  />
-                <SocialBtn href="#" icon={Instagram} label="Instagram" />
-                <SocialBtn href="#" icon={Youtube}   label="YouTube"   />
-                <SocialBtn href="#" icon={Twitter}   label="Twitter"   />
+                <SocialBtn
+                  href="https://www.facebook.com/share/1CCEHrhTFm/"
+                  icon={Facebook}
+                  label="Facebook"
+                />
+
+                <SocialBtn
+                  href="https://www.instagram.com/thinkersbaseacademyenugu?utm_source=qr&igsh=MWs2bDh0ZjU3eG81Mw=="
+                  icon={Instagram}
+                  label="Instagram"
+                />
+                <SocialBtn
+                href="mailto:thinkersbaseacademy@gmail.com"
+                  icon={Mail}
+                  label="Gmail"
+                />
               </div>
             </div>
 
-            {/* Col 2 — Quick links */}
+
+            {/* Quick Links */}
             <div>
-              <h4 className="font-nunito font-extrabold text-white text-sm uppercase tracking-wider mb-4">
+              <h4 className="font-bold text-sm uppercase mb-4">
                 Quick Links
               </h4>
-              <ul className="space-y-2.5">
+
+              <ul className="space-y-2">
                 {navLinks
                   .filter((l) => !l.children)
                   .map((l) => (
@@ -161,73 +165,81 @@ export default function Footer() {
                       <FooterLink href={l.href}>{l.label}</FooterLink>
                     </li>
                   ))}
-                <li><FooterLink href="/achievements">Achievements</FooterLink></li>
-                <li><FooterLink href="/school-life">School Life</FooterLink></li>
               </ul>
             </div>
 
-            {/* Col 3 — Our School */}
+
+            {/* Our School */}
             <div>
-              <h4 className="font-nunito font-extrabold text-white text-sm uppercase tracking-wider mb-4">
+              <h4 className="font-bold text-sm uppercase mb-4">
                 Our School
               </h4>
-              <ul className="space-y-2.5">
+
+              <ul className="space-y-2">
                 {stages.map((s) => (
                   <li key={s.id}>
                     <FooterLink href={s.href}>
-                      {s.emoji} {s.label}
-                      <span className="ml-1.5 text-white/40 text-xs">({s.ages})</span>
+                      {s.label}
                     </FooterLink>
                   </li>
                 ))}
-                <li><FooterLink href="/admissions">How to Apply</FooterLink></li>
-                <li><FooterLink href="/about">Our Story</FooterLink></li>
+
+                <li>
+                  <FooterLink href="/admissions">Admissions</FooterLink>
+                </li>
+
+                <li>
+                  <FooterLink href="/about">About Us</FooterLink>
+                </li>
               </ul>
             </div>
 
-            {/* Col 4 — Contact */}
+
+            {/* Contact */}
             <div>
-              <h4 className="font-nunito font-extrabold text-white text-sm uppercase tracking-wider mb-4">
-                Get in Touch
+              <h4 className="font-bold text-sm uppercase mb-4">
+                Contact
               </h4>
+
               <div className="space-y-3">
-                <ContactRow icon={MapPin}>{schoolInfo.address}</ContactRow>
+                <ContactRow icon={MapPin}>
+                  {schoolInfo.address}
+                </ContactRow>
+
                 <ContactRow icon={Phone}>
-                  <a href={`tel:${schoolInfo.phone}`} className="hover:text-nursery transition-colors">
+                  <a href={`tel:${schoolInfo.phone}`}>
                     {schoolInfo.phone}
                   </a>
                 </ContactRow>
+
                 <ContactRow icon={Mail}>
-                  <a href={`mailto:${schoolInfo.email}`} className="hover:text-nursery transition-colors">
+                  <a href={`mailto:${schoolInfo.email}`}>
                     {schoolInfo.email}
                   </a>
                 </ContactRow>
-                <ContactRow icon={Clock}>{schoolInfo.hours}</ContactRow>
-              </div>
 
-              {/* CTA button */}
-              <Link
-                href="/admissions"
-                className="mt-6 inline-block bg-nursery text-forest font-nunito font-extrabold text-sm px-5 py-2.5 rounded-button hover:opacity-90 hover:-translate-y-0.5 transition-all shadow-md"
-              >
-                Apply Now ✨
-              </Link>
+                <ContactRow icon={Clock}>
+                  {schoolInfo.hours}
+                </ContactRow>
+              </div>
             </div>
           </div>
+
 
           {/* Bottom bar */}
           <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <p className="text-white/40 text-xs font-poppins text-center sm:text-left">
+
+            <p className="text-white/40 text-xs">
               © {year} {schoolInfo.name}. All rights reserved.
             </p>
-            <div className="flex items-center gap-4">
-              <FooterLink href="/privacy">Privacy Policy</FooterLink>
-              <span className="text-white/20 text-xs">·</span>
-              <FooterLink href="/safeguarding">Safeguarding</FooterLink>
-              <span className="text-white/20 text-xs">·</span>
-              <FooterLink href="/terms">Terms of Use</FooterLink>
+
+            <div className="flex gap-4 text-xs">
+              <FooterLink href="/privacy">Privacy</FooterLink>
+              <FooterLink href="/terms">Terms</FooterLink>
             </div>
+
           </div>
+
         </div>
       </footer>
     </>

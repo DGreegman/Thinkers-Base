@@ -2,24 +2,17 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { stages } from "@/data/content";
+import stages from "@/data/content";
 import type { Stage } from "@/types";
 
-// ── Updated stage illustrations ──────────────────────────────────────────────
-const stageIllustrations: Record<string, string> = {
-  nursery: "🌱🧸🎨",
-  primary: "📚⚽🔭",
-  secondary: "🎓💻🏆",
-};
-
-// ── Individual stage card ─────────────────────────────────────────────────────
+// ── Individual stage card ────────────────────────────────────────────
 function StageCard({ stage, index }: { stage: Stage; index: number }) {
   const textColor = "text-forest";
   const mutedColor = "text-forest/70";
   const btnBg = "bg-forest text-white hover:bg-forest/90";
-  const iconBg = "bg-forest/10";
 
   return (
     <motion.div
@@ -36,16 +29,26 @@ function StageCard({ stage, index }: { stage: Stage; index: number }) {
         style={{ backgroundColor: "#1B4332" }}
       />
 
-      <div className="relative p-7">
-        {/* Emoji cluster */}
-        <div className={`inline-flex items-center gap-1 ${iconBg} rounded-2xl px-3 py-2 mb-5`}>
-          <span className="text-xl tracking-wider">{stageIllustrations[stage.id]}</span>
-        </div>
+      {/* Stage photo — replace the image filename in content.ts for each stage */}
+      <div className="relative w-full h-48 overflow-hidden">
+        <Image
+          src={stage.image}
+          alt={`${stage.label} at Thinkers Base Academy`}
+          fill
+          className="object-cover group-hover:scale-105 transition-transform duration-500"
+        />
+        {/* subtle overlay so text below reads cleanly */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/10" />
+      </div>
 
-        {/* Stage / Curriculum badge */}
+      <div className="relative p-7">
+
+        {/* Curriculum badge */}
         <div className="mb-3">
-          <span className={`font-poppins text-xs font-semibold ${mutedColor} uppercase tracking-widest`}>
-            {stage.classes} {/* Example: "Playgroup / Foundation Stage" */}
+          <span
+            className={`font-poppins text-xs font-semibold ${mutedColor} uppercase tracking-widest`}
+          >
+            {stage.classes}
           </span>
         </div>
 
@@ -53,6 +56,11 @@ function StageCard({ stage, index }: { stage: Stage; index: number }) {
         <h3 className={`font-nunito font-extrabold text-2xl ${textColor} mb-2`}>
           {stage.emoji} {stage.label}
         </h3>
+
+        {/* Ages */}
+        <p className={`font-poppins text-xs font-semibold ${mutedColor} mb-3`}>
+          {stage.ages}
+        </p>
 
         {/* Description */}
         <p className={`font-poppins text-sm ${mutedColor} leading-relaxed mb-6`}>
@@ -78,7 +86,7 @@ function StageCard({ stage, index }: { stage: Stage; index: number }) {
   );
 }
 
-// ── Stage Cards Section ───────────────────────────────────────────────────────
+// ── Stage Cards Section ──────────────────────────────────────────────
 export default function StageCards() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
@@ -87,8 +95,17 @@ export default function StageCards() {
     <section className="py-20 bg-cream relative overflow-hidden">
       {/* Top wave */}
       <div className="absolute top-0 left-0 right-0 overflow-hidden pointer-events-none">
-        <svg viewBox="0 0 1440 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" className="w-full h-10">
-          <path d="M0,20 C480,40 960,0 1440,20 L1440,0 L0,0 Z" fill="#1B4332" opacity="0.04" />
+        <svg
+          viewBox="0 0 1440 40"
+          xmlns="http://www.w3.org/2000/svg"
+          preserveAspectRatio="none"
+          className="w-full h-10"
+        >
+          <path
+            d="M0,20 C480,40 960,0 1440,20 L1440,0 L0,0 Z"
+            fill="#1B4332"
+            opacity="0.04"
+          />
         </svg>
       </div>
 
@@ -103,18 +120,23 @@ export default function StageCards() {
           <span className="inline-block font-poppins text-leaf font-semibold text-sm tracking-widest uppercase mb-3">
             Our School Stages
           </span>
+
           <h2 className="font-nunito font-extrabold text-3xl sm:text-4xl text-forest mb-4">
             A Place for Every Child
           </h2>
+
           <p className="font-poppins text-charcoal/60 text-base max-w-xl mx-auto leading-relaxed">
-            From first steps into learning to launching young minds — we provide a curriculum that grows with your child.
+            From first steps into learning to launching young minds — we provide
+            a curriculum that grows with your child.
           </p>
         </motion.div>
 
         {/* Cards grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {inView &&
-            stages.map((stage, i) => <StageCard key={stage.id} stage={stage} index={i} />)}
+            stages.map((stage: Stage, index: number) => (
+              <StageCard key={stage.id} stage={stage} index={index} />
+            ))}
         </div>
       </div>
     </section>

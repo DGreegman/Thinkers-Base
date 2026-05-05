@@ -33,22 +33,8 @@ const stageConfig = {
   all:       { hex: "#52B788", label: "🌿 All Stages",textDark: false },
 };
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Floating leaf decoration
-// ─────────────────────────────────────────────────────────────────────────────
 
-function FloatLeaf({ x, y, delay, size }: { x: string; y: string; delay: number; size: number }) {
-  return (
-    <motion.div
-      className="absolute pointer-events-none select-none text-leaf/20"
-      style={{ left: x, top: y, fontSize: size }}
-      animate={{ y: [0, -20, 0], rotate: [0, 15, 0] }}
-      transition={{ duration: 5 + delay, repeat: Infinity, ease: "easeInOut", delay }}
-    >
-      🍃
-    </motion.div>
-  );
-}
+
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Main Component
@@ -75,13 +61,6 @@ export default function ComingSoon({
           backgroundSize: "40px 40px",
         }}
       />
-
-      {/* Floating leaves */}
-      <FloatLeaf x="5%"  y="10%" delay={0}   size={32} />
-      <FloatLeaf x="90%" y="15%" delay={1.2} size={24} />
-      <FloatLeaf x="8%"  y="75%" delay={2.1} size={20} />
-      <FloatLeaf x="85%" y="70%" delay={0.7} size={28} />
-      <FloatLeaf x="50%" y="5%"  delay={1.6} size={18} />
 
       {/* Glow blob */}
       <div
