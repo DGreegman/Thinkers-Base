@@ -1,24 +1,11 @@
-import ComingSoon from "@/components/shared/Comingsoon";
+import SchoolLifePage from "@/components/school-life/SchoolLifePage";
 
-export const metadata = { title: "School Life — Greenleaf Academy" };
+export const metadata = {
+  title: "School Life — Thinkers Base Academy",
+  description:
+    "Discover life at Thinkers Base Academy — clubs, activities, events, a typical school day, and the wellbeing culture that makes TBA special.",
+};
 
-export default function SchoolLifePage() {
-  return (
-    <ComingSoon
-      title="School Life Page"
-      emoji="🎉"
-      stage="all"
-      description="The full picture of life at Greenleaf — clubs, sports, events, performances and the everyday moments that make this school extraordinary."
-      comingFeatures={[
-        "Photo mosaic hero across all stages",
-        "Clubs & activities with stage filter",
-        "Sports highlights and competition results",
-        "Upcoming events calendar",
-        "Stage mini-sections (Nursery / Primary / Secondary)",
-        "Masonry photo & video gallery",
-        "Student leadership team cards",
-        "'A Day at School' immersive story feature",
-      ]}
-    />
-  );
+export default function Page() {
+  return <SchoolLifePage />;
 }

@@ -2,57 +2,50 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ChevronDown, School } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import { clsx } from "clsx";
 import { navLinks } from "@/data/content";
-
 
 /* ─── Stage accent colours ───────────────────────── */
 
 const stageAccent: Record<string, { border: string; text: string }> = {
-  "/creche": {
-    border: "border-creche",
-    text: "text-creche",
-  },
-  "/pre-school": {
-    border: "border-preschool",
-    text: "text-preschool",
-  },
-  "/grade-school": {
-    border: "border-gradeschool",
-    text: "text-gradeschool",
-  },
+  "/creche":      { border: "border-[#F4D03F]", text: "text-[#F4D03F]" },
+  "/pre-school":  { border: "border-[#5BA4CF]", text: "text-[#5BA4CF]" },
+  "/grade-school":{ border: "border-[#E8845C]", text: "text-[#E8845C]" },
 };
 
 function getAccent(pathname: string) {
-  const match = Object.keys(stageAccent).find((key) =>
-    pathname.startsWith(key)
-  );
-
-  return match
-    ? stageAccent[match]
-    : {
-        border: "border-leaf",
-        text: "text-leaf",
-      };
+  const match = Object.keys(stageAccent).find((key) => pathname.startsWith(key));
+  return match ? stageAccent[match] : { border: "border-leaf", text: "text-leaf" };
 }
 
 /* ─── Logo ─────── */
 
 function Logo() {
   return (
-    <Link href="/" className="flex items-center gap-2 group">
-      <div className="w-9 h-9 flex items-center justify-center rounded-full bg-white/10 group-hover:bg-white/20 transition">
-        <School className="w-5 h-5 text-white" />
+    <Link href="/" className="flex items-center gap-2.5 group">
+      {/* Logo image — place your TB logo at /images/TB logo.jpg */}
+      <div className="w-10 h-10 flex items-center justify-center rounded-full overflow-hidden bg-white/15 group-hover:bg-white/25 transition border border-white/20">
+        <Image
+          src="/images/TB logo.jpg"
+          alt="Thinkers Base Academy Logo"
+          width={40}
+          height={40}
+          className="object-cover w-full h-full"
+          onError={(e) => {
+            // Fallback: hide broken image, show text initials
+            (e.currentTarget as HTMLImageElement).style.display = "none";
+          }}
+        />
       </div>
 
       <div className="flex flex-col leading-none">
         <span className="font-nunito font-extrabold text-white text-[15px] tracking-tight">
           Thinkers Base
         </span>
-
         <span className="font-poppins text-leaf text-[10px] tracking-widest uppercase">
           Academy
         </span>
@@ -79,7 +72,6 @@ function DesktopDropdown({
         setOpen(false);
       }
     }
-
     document.addEventListener("mousedown", handleClick);
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
@@ -94,13 +86,7 @@ function DesktopDropdown({
         )}
       >
         {label}
-
-        <ChevronDown
-          className={clsx(
-            "w-4 h-4 transition-transform",
-            open && "rotate-180"
-          )}
-        />
+        <ChevronDown className={clsx("w-4 h-4 transition-transform", open && "rotate-180")} />
       </button>
 
       <AnimatePresence>
@@ -118,7 +104,7 @@ function DesktopDropdown({
                   key={child.href}
                   href={child.href}
                   onClick={() => setOpen(false)}
-                  className="block px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50"
+                  className="block px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 hover:text-forest transition-colors"
                 >
                   {child.label}
                 </Link>
@@ -133,13 +119,7 @@ function DesktopDropdown({
 
 /* ─── Mobile menu ───────────────────────── */
 
-function MobileMenu({
-  open,
-  onClose,
-}: {
-  open: boolean;
-  onClose: () => void;
-}) {
+function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
   return (
     <AnimatePresence>
       {open && (
@@ -160,7 +140,6 @@ function MobileMenu({
           >
             <div className="flex items-center justify-between px-5 py-4 border-b border-white/10">
               <Logo />
-
               <button
                 onClick={onClose}
                 className="w-9 h-9 flex items-center justify-center rounded-full bg-white/10"
@@ -176,7 +155,6 @@ function MobileMenu({
                     <p className="text-white/50 text-xs uppercase font-bold px-3 pt-3 pb-1">
                       {link.label}
                     </p>
-
                     {link.children.map((child) => (
                       <Link
                         key={child.href}
@@ -223,17 +201,13 @@ function MobileMenu({
 
 export default function Navbar() {
   const pathname = usePathname();
-
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-
   const accent = getAccent(pathname);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
-
     window.addEventListener("scroll", onScroll);
-
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
@@ -248,11 +222,9 @@ export default function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-4 lg:px-8">
           <div className="flex items-center justify-between h-16">
-
             <Logo />
 
             {/* Desktop menu */}
-
             <nav className="hidden lg:flex items-center gap-2">
               {navLinks.map((link) =>
                 link.children ? (
@@ -279,7 +251,6 @@ export default function Navbar() {
             </nav>
 
             {/* Apply button — desktop */}
-
             <div className="hidden lg:flex">
               <a
                 href="https://wa.me/2348037134462"
@@ -291,23 +262,18 @@ export default function Navbar() {
               </a>
             </div>
 
-            {/* Mobile hamburger button */}
-
+            {/* Mobile hamburger */}
             <button
               onClick={() => setMobileOpen(true)}
               className="lg:hidden w-9 h-9 flex items-center justify-center rounded-full bg-white/10"
             >
               <Menu className="w-5 h-5 text-white" />
             </button>
-
           </div>
         </div>
       </header>
 
-      <MobileMenu
-        open={mobileOpen}
-        onClose={() => setMobileOpen(false)}
-      />
+      <MobileMenu open={mobileOpen} onClose={() => setMobileOpen(false)} />
     </>
   );
 }

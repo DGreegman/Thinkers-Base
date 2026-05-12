@@ -1,24 +1,11 @@
-import ComingSoon from "@/components/shared/Comingsoon";
+import AdmissionsPage from "@/components/admissions/AdmissionsPage";
 
-export const metadata = { title: "Admissions — Greenleaf Academy" };
+export const metadata = {
+  title: "Admissions — Thinkers Base Academy",
+  description:
+    "Apply to Thinkers Base Academy. Learn about our admissions process, requirements, key dates and FAQs for Creche, Pre School and Grade School.",
+};
 
-export default function AdmissionsPage() {
-  return (
-    <ComingSoon
-      title="Admissions Page"
-      emoji="✨"
-      stage="all"
-      description="Everything you need to apply — for Nursery, Primary or Secondary. Step-by-step guide, key dates, requirements, open days and an enquiry form. Coming very soon."
-      comingFeatures={[
-        "Stage selector — Nursery, Primary, Secondary",
-        "5-step visual admissions flowchart",
-        "Requirements checklist per stage",
-        "Key dates and application deadlines",
-        "Upcoming open days calendar",
-        "Online enquiry form",
-        "FAQ accordion by stage",
-        "Direct contact for each stage coordinator",
-      ]}
-    />
-  );
+export default function Page() {
+  return <AdmissionsPage />;
 }

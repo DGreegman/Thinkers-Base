@@ -16,7 +16,7 @@ const poppins = Poppins({
 });
 
 export const metadata = {
-  title: "Our School — Nursery, Primary & Secondary",
+  title: "Thinkersbase Academy",
   description: "Growing Minds, Blooming Futures",
 };
 

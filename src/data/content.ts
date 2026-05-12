@@ -4,39 +4,37 @@ import type { SchoolInfo, Stage, Stat, NavLink } from "@/types";
 export const schoolInfo: SchoolInfo = {
   name:        "Thinkers Base Academy",
   tagline:     "Every Child Belongs Here",
-  description: "A nurturing school community where nursery, primary and secondary pupils grow together.",
+  description: "A nurturing school community where nursery, primary and grade school pupils grow together into confident, curious, compassionate leaders.",
   phone:       "+2348037134462",
   email:       "thinkersbaseacademy@gmail.com",
   address:     "Plot 183A/B Mary Emmanuel Street New GRA Trans-Ekulu, Enugu.",
-  hours:       "Monday – Friday: 7:30am – 5:00pm",
+  hours:       "Mon – Wed: 8:00am – 2:00pm  |  Thu – Fri: 8:00am – 3:00pm",
 };
 
 // ── Stages ───────────────────────────────────────────────────────────────────
 const stages: Stage[] = [
   {
-    id: "Creche",
+    id: "Playgroup",
     label: "Little Learners",
     emoji: "🌱",
-    ages: "Ages 1 – 4",
+    ages: "Ages 1 – 2",
     color: "#F4D03F",
     description: "A safe, warm space where your child takes their first steps into learning through play.",
-    href: "/creche",
-    classes: "Playgroup / Foundation Stage",
+    href: "/Playgroup",
+    classes: "Playgroup ·· Reception",
     hex: "#FEF9E7",
-    // ↓ Replace this filename with your actual creche card image
     image: "/images/P2.webp",
   },
   {
     id: "Pre School",
     label: "Big Adventurers",
     emoji: "🎒",
-    ages: "Ages 4 – 6",
+    ages: "Ages 3 – 5",
     color: "#5BA4CF",
     description: "Curious minds, big questions and the skills to find the answers.",
     href: "/pre-school",
-    classes: "Years 4 – 6",
+    classes: "Preschool 1 – Preschool 2",
     hex: "#EBF5FB",
-    // ↓ Replace this filename with your actual pre-school card image
     image: "/images/small pupils in uniform.jpeg",
   },
   {
@@ -47,9 +45,8 @@ const stages: Stage[] = [
     color: "#E8845C",
     description: "Ambitious, supported and ready to shape the world.",
     href: "/grade-school",
-    classes: "Grade 1 – Grade 5",
+    classes: "Grade 1 – Grade 5/6",
     hex: "#FDF2E9",
-    // ↓ Replace this filename with your actual grade school card image
     image: "/images/Grade 3 pupils with computer.jpeg",
   },
 ];
@@ -57,23 +54,35 @@ export default stages;
 
 // ── Stats ────────────────────────────────────────────────────────────────────
 export const stats: Stat[] = [
-  { label: "Creche",            value: 120, emoji: "🌱" },
-  { label: "Pre School Pupils", value: 480, emoji: "🎒" },
-  { label: "Grade School Pupils", value: 350, emoji: "📚" },
-  { label: "Years of Excellence", value: 15, emoji: "🏆" },
+  { label: "Dedicated Teachers", value: 24, emoji: "👩‍🏫" },
+  { label: "CCTV Cameras",       value: 30, emoji: "📹" },
+  { label: "Happy Parents",      value: 98, emoji: "😊" },
+  { label: "Students Benefiting", value: 100, emoji: "🎓" },
+];
+
+// ── Extra-curricular activities ───────────────────────────────────────────────
+export const extraCurricular = [
+  { name: "Music & Dance Club",  emoji: "🎵" },
+  { name: "Culinary Club",       emoji: "🍳" },
+  { name: "Science Club",        emoji: "🔬" },
+  { name: "Bible Explorers",     emoji: "📖" },
+  { name: "Public Speaking",     emoji: "🎤" },
+  { name: "Farmers Club",        emoji: "🌿" },
+  { name: "Art & Craft",         emoji: "🎨" },
+  { name: "Swimming",            emoji: "🏊" },
 ];
 
 // ── Navigation links ─────────────────────────────────────────────────────────
 export const navLinks: NavLink[] = [
-  { label: "Home", href: "/" },
-  { label: "About Us", href: "/about" },
+  { label: "Home",       href: "/" },
+  { label: "About Us",   href: "/about" },
   {
     label: "Our School",
     href: "#",
     children: [
-      { label: "🌱 Creche",       href: "/creche" },
+      { label: "🌱 Playgroup",       href: "/playgroup" },
       { label: "🎒 Pre School",   href: "/pre-school" },
-      { label: "📚 Grade School", href: "/grade-School" },
+      { label: "📚 Grade School", href: "/grade-school" },
     ],
   },
   { label: "Admissions",  href: "/admissions" },

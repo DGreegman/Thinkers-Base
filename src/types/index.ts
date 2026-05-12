@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-export type StageId = "Creche" | "Pre School" | "Grade School";
+export type StageId = "Playgroup" | "Pre School" | "Grade School";
 
 export interface Stage {
   classes: ReactNode;

@@ -8,28 +8,28 @@ import { Star } from "lucide-react";
 const testimonials = [
   {
     quote:
-      "Our daughter loves coming to Thinkers Base Academy. The nursery teachers are warm and attentive, and she’s blossoming academically and socially.",
+      "Our daughter loves coming to Thinkers Base Academy. The playgroup teachers are warm and attentive, and she’s blossoming academically and socially.",
     author: "Mrs. Adaeze Okonkwo",
-    detail: "Parent of a Nursery pupil",
-    stage: "nursery" as const,
+    detail: "Parent of a Playgroup pupil",
+    stage: "Playgroup" as const,
     stageColor: "#52B788",
     emoji: "🌱",
   },
   {
     quote:
-      "The primary teachers really know each child. My son has improved tremendously in reading and confidence. Thinkers Base Academy doesn’t let any child fall behind.",
+      "The Pre school teachers really know each child. My son has improved tremendously. Thinkers Base Academy doesn’t let any child fall behind.",
     author: "Mr. Chukwuemeka Nwosu",
-    detail: "Parent of a Primary Year 3 pupil",
-    stage: "primary" as const,
+    detail: "Parent of a Pre school pupil",
+    stage: "Pre school" as const,
     stageColor: "#1B4332",
     emoji: "🎒",
   },
   {
     quote:
-      "Secondary at Thinkers Base Academy prepared my daughter academically and personally. She is confident, independent, and ready for her future.",
+      "Grade School at Thinkers Base Academy prepared my daughter academically and personally. She is confident, independent, and ready for her future.",
     author: "Mrs. Funmi Adeola",
-    detail: "Parent of a Secondary Year 12 pupil",
-    stage: "secondary" as const,
+    detail: "Parent of a Grade 3 pupil",
+    stage: "Grade school" as const,
     stageColor: "#3A6EA5",
     emoji: "📚",
   },
@@ -70,7 +70,7 @@ function TestimonialCard({
           className="text-xs font-nunito font-bold px-2.5 py-1 rounded-button"
           style={{
             backgroundColor: testimonial.stageColor + "22",
-            color: testimonial.stage === "nursery" ? "#7a5c00" : testimonial.stageColor,
+            color: testimonial.stage === "Playgroup" ? "#7a5c00" : testimonial.stageColor,
           }}
         >
           {testimonial.emoji}{" "}
@@ -98,7 +98,7 @@ function TestimonialCard({
           className="w-10 h-10 rounded-full flex items-center justify-center font-nunito font-extrabold text-sm flex-shrink-0"
           style={{
             backgroundColor: testimonial.stageColor + "33",
-            color: testimonial.stage === "nursery" ? "#7a5c00" : testimonial.stageColor,
+            color: testimonial.stage === "Playgroup" ? "#7a5c00" : testimonial.stageColor,
           }}
         >
           {testimonial.author.split(" ").map((n) => n[0]).join("").slice(0, 2)}
@@ -163,7 +163,7 @@ export default function Testimonials() {
         >
           {[
             { value: "98%", label: "Parent satisfaction" },
-            { value: "500+", label: "Happy families" },
+            { value: "100+", label: "Happy families" },
             { value: "2019", label: "Since establishment" },
           ].map((item) => (
             <div key={item.label} className="flex flex-col items-center">

@@ -1,20 +1,21 @@
-"use client";
-
 import Hero from "@/components/home/Hero";
-import StatsBar from "@/components/home/StatsBar";
-import StageCards from "@/components/home/StageCards";
 import Testimonials from "@/components/home/Testimonials";
-import Eventsandcta from "@/components/home/Eventsandcta";
+import StageCards from "@/components/home/StageCards";
+import WhyThinkers from "@/components/home/WhyThinkers";
+import WhyParentsChooseUs from "@/components/home/WhyParentsChooseUs";
+import CampusLife from "@/components/home/CampusLife";
+import HomeCta from "@/components/home/HomeCta";
 
 export default function HomePage() {
   return (
     <>
       <Hero />
-      <StatsBar />
-      <StageCards />
       <Testimonials />
-      <Eventsandcta />
-      
+      <StageCards />
+      <WhyThinkers />
+      <WhyParentsChooseUs />
+      <CampusLife />
+      <HomeCta />
     </>
   );
 }
