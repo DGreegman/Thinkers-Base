@@ -1,0 +1,36 @@
+{
+  "users": [
+    {
+      "id": "usr_admin_001",
+      "username": "admin",
+      "password": "$2b$10$e1DwAkq2VxpXYbkVLzB5ve.CsRqbxYDBUx9nR6vgjw0Clf5TB0hsO",
+      "role": "admin",
+      "name": "Mrs. Joysam Ngene",
+      "active": true,
+      "createdAt": "2025-01-01T00:00:00.000Z",
+      "loginAttempts": 0
+    },
+    {
+      "id": "usr_1778919969825_d7gxq",
+      "username": "Mrs Nkiru",
+      "password": "$2b$10$QKxEr58YMhWGrfUTTHE9w.6R/ACOfTWKAJOy7cn21SxVpCjvnnVWa",
+      "role": "teacher",
+      "name": "Mrs Nkiru Ebube",
+      "active": true,
+      "createdAt": "2026-05-16T08:26:09.825Z",
+      "createdBy": "Mrs. Joysam Ngene",
+      "loginAttempts": 0
+    },
+    {
+      "id": "usr_1778920008277_o0xn3",
+      "username": "PAR001",
+      "password": "TBA@Admin2025",
+      "role": "parent",
+      "name": "Mr Okeke",
+      "active": true,
+      "createdAt": "2026-05-16T08:26:48.277Z",
+      "createdBy": "Mrs. Joysam Ngene",
+      "loginAttempts": 0
+    }
+  ]
+}

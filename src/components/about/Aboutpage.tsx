@@ -72,7 +72,7 @@ function AboutHero() {
             </motion.p>
 
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="flex flex-wrap gap-3">
-              <a href="https://wa.me/2348037134462" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-nursery text-forest font-nunito font-extrabold text-sm px-6 py-3 rounded-button hover:opacity-90 hover:-translate-y-0.5 transition-all shadow-lg">
+              <a href="https://wa.me/2348088292398" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-nursery text-forest font-nunito font-extrabold text-sm px-6 py-3 rounded-button hover:opacity-90 hover:-translate-y-0.5 transition-all shadow-lg">
                 Join Our Community <ArrowRight className="w-4 h-4" />
               </a>
               <Link href="/contact" className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white font-nunito font-bold text-sm px-6 py-3 rounded-button hover:bg-white/20 hover:-translate-y-0.5 transition-all">
@@ -84,7 +84,7 @@ function AboutHero() {
           <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3, duration: 0.6 }} className="hidden lg:grid grid-cols-2 gap-4">
             {[
               { emoji: "🌱", value: "5+", label: "Years of excellence" },
-              { emoji: "👶", value: "Playgroup", label: "Ages 1 – 3" },
+              { emoji: "👶", value: "Foundation Stage", label: "Ages 1 – 3" },
               { emoji: "🎒", value: "Key Stage 1", label: "Grade 1 – 2" },
               { emoji: "📚", value: "Key Stage 2", label: "Grade 3 – 5/6" },
             ].map((item, i) => (
@@ -274,7 +274,7 @@ function OurCurriculum() {
   const keyStages = [
     {
       badge: "🌱 Foundation Stage",
-      label: "Playgroup",
+      label: "Foundation",
       color: "#F4D03F",
       bg: "#FEF9E7",
       ageRange: "Ages 1 – 3",
@@ -559,10 +559,10 @@ function AcademicCalendar() {
               title: "School Hours",
               lines: [
                 "Monday – Wednesday",
-                "8:00am – 2:00pm",
+                "8:00am – 3:00pm",
                 "",
                 "Thursday – Friday",
-                "8:00am – 3:00pm",
+                "8:00am – 2:00pm",
                 "",
                 "Children should arrive before 8:00am.",
               ],
@@ -570,7 +570,7 @@ function AcademicCalendar() {
             {
               icon: Calendar,
               title: "School Days",
-              desc: "Monday to Friday, except on public holidays. Our dedicated team is available throughout the full school day.",
+              desc: "Monday to Friday, except on public holidays and school holidays. Our dedicated team is available throughout the full school day.",
             },
           ].map((item, i) => (
             <motion.div key={item.title} initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ delay: i * 0.1, duration: 0.5 }} className="bg-white rounded-card p-7 shadow-card">
@@ -598,77 +598,7 @@ function AcademicCalendar() {
   );
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// 10. SCHOOL POLICIES
-// ─────────────────────────────────────────────────────────────────────────────
-function SchoolPolicies() {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
 
-  const goldenRules = [
-    "Toys are not allowed in school except when instructed for lessons",
-    "Jewelry and money are not allowed in school",
-    "No foul language and no bullying in school",
-    "No fighting — any pupil who starts a fight will be suspended or expelled",
-    "Unhealthy snacks such as chocolates, gum, sweets and soft drinks are not allowed",
-    "Daily meal plan is provided by the school — parents should adhere strictly to it",
-  ];
-
-  return (
-    <section ref={ref} className="py-20 bg-forest relative overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none opacity-[0.05]" style={{ backgroundImage: "radial-gradient(circle, #ffffff 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div initial={{ opacity: 0, y: 16 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5 }} className="text-center mb-12">
-          <span className="inline-block font-poppins text-leaf font-semibold text-sm tracking-widest uppercase mb-3">Guidelines & Conduct</span>
-          <h2 className="font-nunito font-extrabold text-3xl sm:text-4xl text-white mb-4">School Policies</h2>
-        </motion.div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Homework */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0.1, duration: 0.5 }} className="bg-white/10 border border-white/15 rounded-card p-7">
-            <FileText className="w-10 h-10 text-nursery mb-4" />
-            <h3 className="font-nunito font-bold text-white text-xl mb-4">Homework Policy</h3>
-            <p className="font-poppins text-white/75 text-sm leading-relaxed mb-4">We give take-home assignments to develop good study habits and shared learning between school and home.</p>
-            <ul className="space-y-2.5">
-              {["Go through your child's school bag daily", "Ensure homework is done and returned on time", "Guide your child — do not do their homework for them"].map((item, i) => (
-                <li key={i} className="flex items-start gap-2 text-sm text-white/75">
-                  <CheckCircle2 className="w-4 h-4 text-nursery flex-shrink-0 mt-0.5" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-
-          {/* Birthday */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0.2, duration: 0.5 }} className="bg-white/10 border border-white/15 rounded-card p-7">
-            <Calendar className="w-10 h-10 text-nursery mb-4" />
-            <h3 className="font-nunito font-bold text-white text-xl mb-4">Birthday Policy</h3>
-            <p className="font-poppins text-white/75 text-sm leading-relaxed mb-4">Children can celebrate their birthdays in school. Parents who wish to celebrate their children’s birthday should please notify the school or the class teacher two days in advance and ensure that they come to school by 10:30 on that day. </p>
-            <div className="bg-white/10 rounded-lg p-4 border border-white/15">
-              <p className="font-poppins text-white/75 text-sm"><span className="font-nunito font-bold text-nursery">Note:</span> Cooked food will not be allowed in school during birthday celebration.</p>
-            </div>
-          </motion.div>
-
-          {/* Golden Rules */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0.3, duration: 0.5 }} className="bg-white/10 border border-white/15 rounded-card p-7">
-            <Shield className="w-10 h-10 text-nursery mb-4" />
-            <h3 className="font-nunito font-bold text-white text-xl mb-4">Golden Rules</h3>
-            <ul className="space-y-3">
-              {goldenRules.map((rule, i) => (
-                <li key={i} className="flex items-start gap-2.5">
-                  <div className="w-5 h-5 rounded-full bg-nursery/30 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="font-nunito font-bold text-nursery text-[9px]">{i + 1}</span>
-                  </div>
-                  <p className="font-poppins text-white/75 text-xs leading-relaxed">{rule}</p>
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-        </div>
-      </div>
-    </section>
-  );
-}
 
 // ─────────────────────────────────────────────────────────────────────────────
 // 11. TIMELINE
@@ -693,7 +623,7 @@ function TreeTimeline() {
         <motion.div initial={{ opacity: 0, y: 16 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5 }} className="text-center mb-14">
           <span className="inline-block font-poppins text-leaf font-semibold text-sm tracking-widest uppercase mb-3">Our Journey</span>
           <h2 className="font-nunito font-extrabold text-3xl sm:text-4xl text-forest mb-4">How We Grew 🌳</h2>
-          <p className="font-poppins text-charcoal/60 text-base max-w-lg mx-auto">From a Play Group in 2019 to a full Creche, Pre School and Grade School — with our first graduating class in 2024.</p>
+          <p className="font-poppins text-charcoal/60 text-base max-w-lg mx-auto">From a Play Group in 2019 to a full Playgroup, Pre School and Grade School — with our first graduating class in 2024.</p>
         </motion.div>
 
         <div className="relative">
@@ -874,7 +804,6 @@ export default function AboutPage() {
       <OurFacilities />
       <ExtraCurricular />
       <AcademicCalendar />
-      <SchoolPolicies />
       <TreeTimeline />
       <PrincipalsMessage />
       <PhotoWall />

@@ -4,11 +4,11 @@ import type { SchoolInfo, Stage, Stat, NavLink } from "@/types";
 export const schoolInfo: SchoolInfo = {
   name:        "Thinkers Base Academy",
   tagline:     "Every Child Belongs Here",
-  description: "A nurturing school community where nursery, primary and grade school pupils grow together into confident, curious, compassionate leaders.",
-  phone:       "+2348037134462",
+  description: "A nurturing school community where foundation stage and grade school pupils grow together into confident, curious, compassionate leaders.",
+  phone:       "+2348037134462, +2348088292398",
   email:       "thinkersbaseacademy@gmail.com",
   address:     "Plot 183A/B Mary Emmanuel Street New GRA Trans-Ekulu, Enugu.",
-  hours:       "Mon – Wed: 8:00am – 2:00pm  |  Thu – Fri: 8:00am – 3:00pm",
+  hours:       "Mon – Wed: 8:00am – 3:00pm  |  Thu – Fri: 8:00am – 2:00pm",
 };
 
 // ── Stages ───────────────────────────────────────────────────────────────────
@@ -55,7 +55,7 @@ export default stages;
 // ── Stats ────────────────────────────────────────────────────────────────────
 export const stats: Stat[] = [
   { label: "Dedicated Teachers", value: 24, emoji: "👩‍🏫" },
-  { label: "CCTV Cameras",       value: 30, emoji: "📹" },
+  { label: "CCTV Cameras",       value: 50, emoji: "📹" },
   { label: "Happy Parents",      value: 98, emoji: "😊" },
   { label: "Students Benefiting", value: 100, emoji: "🎓" },
 ];
@@ -80,8 +80,7 @@ export const navLinks: NavLink[] = [
     label: "Our School",
     href: "#",
     children: [
-      { label: "🌱 Playgroup",       href: "/playgroup" },
-      { label: "🎒 Pre School",   href: "/pre-school" },
+      { label: "🌱 Foundation Stage",       href: "/foundation-stage" },
       { label: "📚 Grade School", href: "/grade-school" },
     ],
   },

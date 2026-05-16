@@ -103,7 +103,7 @@ export default function Hero() {
             >
               <Sparkles className="w-3.5 h-3.5 text-leaf" />
               <span className="font-nunito font-bold text-xs tracking-wide">
-                Creche · Pre School · Grade school
+                Playgroup · Pre School · Grade school
               </span>
             </motion.div>
 

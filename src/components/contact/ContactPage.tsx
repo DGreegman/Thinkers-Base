@@ -66,10 +66,10 @@ function ContactMain() {
   const [form, setForm] = useState({ name: "", phone: "", email: "", stage: "", message: "" });
 
   const contactCards = [
-    { icon: Phone, color: "#52B788", title: "Call / WhatsApp", lines: ["+234 803 713 4462"], href: "https://wa.me/2348037134462", cta: "Open WhatsApp" },
+    { icon: Phone, color: "#52B788", title: "Call / WhatsApp", lines: ["+234 803 713 4462", "+2348088292398"], href: "https://wa.me/+2348088292398", cta: "Open WhatsApp" },
     { icon: Mail, color: "#5BA4CF", title: "Email Us", lines: ["thinkersbaseacademy@gmail.com"], href: "mailto:thinkersbaseacademy@gmail.com", cta: "Send Email" },
     { icon: MapPin, color: "#E8845C", title: "Visit Us", lines: ["Plot 183A/B Mary Emmanuel Street", "New GRA Trans-Ekulu, Enugu"], href: "https://maps.app.goo.gl/6o2zWi1o3rsL1h6cA", cta: "Get Directions" },
-    { icon: Clock, color: "#F4D03F", title: "School Hours", lines: ["Mon – Wed: 8:00am – 2:00pm", "Thu – Fri: 8:00am – 3:00pm"], href: null, cta: null },
+    { icon: Clock, color: "#F4D03F", title: "School Hours", lines: ["Mon – Wed: 8:00am – 3:00pm", "Thu – Fri: 8:00am – 2:00pm"], href: null, cta: null },
   ];
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
@@ -81,7 +81,7 @@ function ContactMain() {
     const msg = encodeURIComponent(
       `Hello Thinkers Base Academy! 👋\n\nI'd like to make an enquiry:\n\nName: ${form.name}\nPhone: ${form.phone}\nEmail: ${form.email}\nStage of interest: ${form.stage || "Not specified"}\n\nMessage:\n${form.message}`
     );
-    window.open(`https://wa.me/2348037134462?text=${msg}`, "_blank");
+    window.open(`https://wa.me/+2348088292398?text=${msg}`, "_blank");
     setSubmitted(true);
   }
 
@@ -154,7 +154,7 @@ function ContactMain() {
                     <label className="font-poppins text-xs font-semibold text-charcoal/60 block mb-1.5">Stage of Interest</label>
                     <select name="stage" value={form.stage} onChange={handleChange} className="w-full font-poppins text-sm px-4 py-3 rounded-xl border-2 border-gray-100 focus:border-leaf focus:outline-none transition-colors bg-gray-50/50 text-charcoal/75">
                       <option value="">Select a stage...</option>
-                      <option value="Creche (Ages 1–4)">🌱 Creche — Ages 1–4</option>
+                      <option value="Foundation stage (Ages 1–4)">🌱 Foundation — Ages 1–4</option>
                       <option value="Pre School / Key Stage 1 (Ages 4–6)">🎒 Pre School / Key Stage 1 — Ages 4–6</option>
                       <option value="Grade School / Key Stage 2 (Ages 6–12)">📚 Grade School / Key Stage 2 — Ages 6–12</option>
                       <option value="General Enquiry">💬 General Enquiry</option>
@@ -235,8 +235,7 @@ function QuickLinks() {
   const links = [
     { emoji: "✨", label: "Apply for Admissions", href: "/admissions", desc: "Start your application today" },
     { emoji: "🏫", label: "About Our School", href: "/about", desc: "Our story, mission & values" },
-    { emoji: "🌱", label: "Playgroup Programme", href: "/playgroup", desc: "Ages 1 – 2" },
-    { emoji: "🎒", label: "Pre School", href: "/pre-school", desc: "Ages 3 – 5" },
+    { emoji: "🌱", label: "Foundation Programme", href: "/Foundation", desc: "Ages 1 – 5" },
     { emoji: "📚", label: "Grade School", href: "/grade-school", desc: "Ages 6 – 12" },
     { emoji: "🎨", label: "School Life", href: "/school-life", desc: "Activities & campus life" },
   ];
