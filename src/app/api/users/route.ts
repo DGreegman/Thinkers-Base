@@ -1,59 +1,41 @@
 import { NextRequest, NextResponse } from "next/server";
-import { promises as fs } from "fs";
-import path from "path";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import sql, { initializeDatabase, generateId } from "@/lib/db";
 
-const USERS_FILE  = path.join(process.cwd(), "src", "data", "users.json");
-const JWT_SECRET  = process.env.JWT_SECRET || "TBA_SECRET_KEY_CHANGE_IN_PRODUCTION";
-const JWT_EXPIRES = "8h";
-const SALT_ROUNDS = 10;
-const MAX_LOGIN_ATTEMPTS = 5;
+const JWT_SECRET      = process.env.JWT_SECRET!;
+const JWT_EXPIRES     = "8h";
+const SALT_ROUNDS     = 10;
+const MAX_ATTEMPTS    = 5;
 const LOCKOUT_MINUTES = 15;
 
-export type User = {
+type User = {
   id: string;
   username: string;
   password: string;
   role: "admin" | "teacher" | "parent";
   name: string;
   active: boolean;
-  createdAt: string;
-  createdBy?: string;
-  loginAttempts?: number;
-  lockedUntil?: string;
+  created_at: string;
+  created_by?: string;
+  login_attempts: number;
+  locked_until?: string;
+  classes?: string[];
 };
 
-type UsersData = { users: User[] };
-
-async function readUsers(): Promise<UsersData> {
-  try {
-    const raw = await fs.readFile(USERS_FILE, "utf-8");
-    return JSON.parse(raw);
-  } catch {
-    return { users: [] };
-  }
-}
-
-async function writeUsers(data: UsersData) {
-  await fs.writeFile(USERS_FILE, JSON.stringify(data, null, 2), "utf-8");
-}
-
-function generateId(): string {
-  return `usr_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
-}
+type ClassRow = { class_name: string };
 
 function sanitizeUser(user: User) {
-  const { password, loginAttempts, lockedUntil, ...safe } = user;
+  const { password, login_attempts, locked_until, ...safe } = user;
   return safe;
 }
 
 function isLocked(user: User): boolean {
-  if (!user.lockedUntil) return false;
-  return new Date(user.lockedUntil) > new Date();
+  if (!user.locked_until) return false;
+  return new Date(user.locked_until) > new Date();
 }
 
-export function generateToken(user: User): string {
+function generateToken(user: User): string {
   return jwt.sign(
     { id: user.id, role: user.role, name: user.name },
     JWT_SECRET,
@@ -76,13 +58,19 @@ function verifyAdminRequest(req: NextRequest): boolean {
   return decoded?.role === "admin";
 }
 
+async function getParentClasses(parentId: string): Promise<string[]> {
+  const rows = await sql`SELECT class_name FROM parent_classes WHERE parent_id = ${parentId}`;
+  return (rows as ClassRow[]).map((r) => r.class_name);
+}
+
 // ─── GET ──────────────────────────────────────────────────────────────────────
 export async function GET(req: NextRequest) {
   try {
+    await initializeDatabase();
     const { searchParams } = new URL(req.url);
     const action = searchParams.get("action");
 
-    // Staff login
+    // ── Staff login ──
     if (action === "login") {
       const username = searchParams.get("username");
       const password = searchParams.get("password");
@@ -91,72 +79,93 @@ export async function GET(req: NextRequest) {
         return NextResponse.json({ success: false, error: "Username and password required" }, { status: 400 });
       }
 
-      const data = await readUsers();
-      const userIndex = data.users.findIndex(
-        (u) => u.username.toLowerCase() === username.toLowerCase()
-      );
+      const rows = await sql`SELECT * FROM users WHERE LOWER(username) = LOWER(${username})`;
 
-      if (userIndex === -1) {
+      if (rows.length === 0) {
         return NextResponse.json({ success: false, error: "Invalid username or password" }, { status: 401 });
       }
 
-      const user = data.users[userIndex];
+      const user = rows[0] as User;
 
       if (!user.active) {
         return NextResponse.json({ success: false, error: "Account deactivated. Contact admin." }, { status: 403 });
       }
 
       if (isLocked(user)) {
-        const t = new Date(user.lockedUntil!).toLocaleTimeString();
+        const t = new Date(user.locked_until!).toLocaleTimeString();
         return NextResponse.json({ success: false, error: `Account locked. Try again after ${t}.` }, { status: 429 });
       }
 
       const match = await bcrypt.compare(password, user.password);
 
       if (!match) {
-        data.users[userIndex].loginAttempts = (user.loginAttempts || 0) + 1;
-        if (data.users[userIndex].loginAttempts! >= MAX_LOGIN_ATTEMPTS) {
-          data.users[userIndex].lockedUntil = new Date(Date.now() + LOCKOUT_MINUTES * 60000).toISOString();
-          data.users[userIndex].loginAttempts = 0;
-          await writeUsers(data);
+        const attempts = (user.login_attempts || 0) + 1;
+        if (attempts >= MAX_ATTEMPTS) {
+          const lockUntil = new Date(Date.now() + LOCKOUT_MINUTES * 60000);
+          await sql`UPDATE users SET login_attempts = 0, locked_until = ${lockUntil.toISOString()} WHERE id = ${user.id}`;
           return NextResponse.json({ success: false, error: `Too many attempts. Locked for ${LOCKOUT_MINUTES} minutes.` }, { status: 429 });
         }
-        await writeUsers(data);
-        const left = MAX_LOGIN_ATTEMPTS - data.users[userIndex].loginAttempts!;
+        await sql`UPDATE users SET login_attempts = ${attempts} WHERE id = ${user.id}`;
+        const left = MAX_ATTEMPTS - attempts;
         return NextResponse.json({ success: false, error: `Invalid credentials. ${left} attempt(s) left.` }, { status: 401 });
       }
 
-      data.users[userIndex].loginAttempts = 0;
-      data.users[userIndex].lockedUntil = undefined;
-      await writeUsers(data);
+      // Reset on success
+      await sql`UPDATE users SET login_attempts = 0, locked_until = NULL WHERE id = ${user.id}`;
 
-      return NextResponse.json({ success: true, user: sanitizeUser(user), token: generateToken(user) });
+      const classes = user.role === "parent" ? await getParentClasses(user.id) : [];
+
+      return NextResponse.json({
+        success: true,
+        user: { ...sanitizeUser(user), classes },
+        token: generateToken(user),
+      });
     }
 
-    // Parent login with access code
+    // ── Parent access code login ──
     if (action === "parentLogin") {
       const code = searchParams.get("code");
       if (!code) {
         return NextResponse.json({ success: false, error: "Access code required" }, { status: 400 });
       }
-      const data = await readUsers();
-      const user = data.users.find((u) => u.role === "parent" && u.password === code && u.active);
-      if (!user) {
+
+      const rows = await sql`
+        SELECT * FROM users WHERE role = 'parent' AND username = ${code} AND active = TRUE
+      `;
+
+      if (rows.length === 0) {
         return NextResponse.json({ success: false, error: "Invalid access code" }, { status: 401 });
       }
-      return NextResponse.json({ success: true, user: sanitizeUser(user), token: generateToken(user) });
+
+      const user = rows[0] as User;
+      const classes = await getParentClasses(user.id);
+
+      return NextResponse.json({
+        success: true,
+        user: { ...sanitizeUser(user), classes },
+        token: generateToken(user),
+      });
     }
 
-    // List users — admin only
+    // ── List users — admin only ──
     if (action === "list") {
       if (!verifyAdminRequest(req)) {
         return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
       }
-      const data = await readUsers();
+
       const roleFilter = searchParams.get("roleFilter");
-      let users = data.users;
-      if (roleFilter) users = users.filter((u) => u.role === roleFilter);
-      return NextResponse.json({ success: true, users: users.map(sanitizeUser) });
+      const rows = roleFilter
+        ? await sql`SELECT * FROM users WHERE role = ${roleFilter} ORDER BY created_at DESC`
+        : await sql`SELECT * FROM users ORDER BY created_at DESC`;
+
+      const users = await Promise.all(
+        (rows as User[]).map(async (user) => {
+          const classes = user.role === "parent" ? await getParentClasses(user.id) : [];
+          return { ...sanitizeUser(user), classes };
+        })
+      );
+
+      return NextResponse.json({ success: true, users });
     }
 
     return NextResponse.json({ success: false, error: "Invalid action" }, { status: 400 });
@@ -166,14 +175,16 @@ export async function GET(req: NextRequest) {
   }
 }
 
-// ─── POST — create user (admin only) ─────────────────────────────────────────
+// ─── POST — create user ───────────────────────────────────────────────────────
 export async function POST(req: NextRequest) {
   try {
+    await initializeDatabase();
+
     if (!verifyAdminRequest(req)) {
       return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
     }
 
-    const { username, password, role, name, createdBy } = await req.json();
+    const { username, password, role, name, createdBy, classes } = await req.json();
 
     if (!username || !password || !role || !name) {
       return NextResponse.json({ success: false, error: "All fields required" }, { status: 400 });
@@ -185,88 +196,113 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, error: "Password must be at least 6 characters" }, { status: 400 });
     }
 
-    const data = await readUsers();
-
-    if (role !== "parent") {
-      const exists = data.users.find((u) => u.username.toLowerCase() === username.toLowerCase());
-      if (exists) {
-        return NextResponse.json({ success: false, error: "Username already exists" }, { status: 409 });
-      }
+    const existing = await sql`SELECT id FROM users WHERE LOWER(username) = LOWER(${username})`;
+    if (existing.length > 0) {
+      return NextResponse.json({ success: false, error: "Username already exists" }, { status: 409 });
     }
 
     const hashedPassword = role === "parent"
       ? password
       : await bcrypt.hash(password, SALT_ROUNDS);
 
-    const newUser: User = {
-      id: generateId(),
-      username,
-      password: hashedPassword,
-      role,
-      name,
-      active: true,
-      createdAt: new Date().toISOString(),
-      createdBy: createdBy || "admin",
-      loginAttempts: 0,
-    };
+    const id = generateId("usr");
 
-    data.users.push(newUser);
-    await writeUsers(data);
+    await sql`
+      INSERT INTO users (id, username, password, role, name, active, created_at, created_by, login_attempts)
+      VALUES (${id}, ${username}, ${hashedPassword}, ${role}, ${name}, TRUE, NOW(), ${createdBy || "admin"}, 0)
+    `;
 
-    return NextResponse.json({ success: true, user: sanitizeUser(newUser) });
+    if (role === "parent" && classes && classes.length > 0) {
+      for (const className of classes) {
+        await sql`
+          INSERT INTO parent_classes (parent_id, class_name)
+          VALUES (${id}, ${className})
+          ON CONFLICT DO NOTHING
+        `;
+      }
+    }
+
+    const newUser = await sql`SELECT * FROM users WHERE id = ${id}`;
+    const assignedClasses = role === "parent" ? await getParentClasses(id) : [];
+
+    return NextResponse.json({
+      success: true,
+      user: { ...sanitizeUser(newUser[0] as User), classes: assignedClasses },
+    });
   } catch (err) {
     console.error("POST /api/users:", err);
     return NextResponse.json({ success: false, error: "Failed to create user" }, { status: 500 });
   }
 }
 
-// ─── PUT — update user (admin only) ──────────────────────────────────────────
+// ─── PUT — update user ────────────────────────────────────────────────────────
 export async function PUT(req: NextRequest) {
   try {
+    await initializeDatabase();
+
     if (!verifyAdminRequest(req)) {
       return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
     }
 
-    const { id, password, name, active, username } = await req.json();
+    const { id, password, name, active, username, classes } = await req.json();
 
     if (!id) {
       return NextResponse.json({ success: false, error: "User ID required" }, { status: 400 });
     }
 
-    const data = await readUsers();
-    const index = data.users.findIndex((u) => u.id === id);
-
-    if (index === -1) {
+    const rows = await sql`SELECT * FROM users WHERE id = ${id}`;
+    if (rows.length === 0) {
       return NextResponse.json({ success: false, error: "User not found" }, { status: 404 });
     }
 
-    if (data.users[index].username === "admin" && active === false) {
+    const user = rows[0] as User;
+
+    if (user.username === "admin" && active === false) {
       return NextResponse.json({ success: false, error: "Cannot deactivate main admin" }, { status: 403 });
     }
 
-    if (name !== undefined)     data.users[index].name = name;
-    if (active !== undefined)   data.users[index].active = active;
-    if (username !== undefined) data.users[index].username = username;
+    if (name !== undefined)     await sql`UPDATE users SET name = ${name} WHERE id = ${id}`;
+    if (active !== undefined)   await sql`UPDATE users SET active = ${active} WHERE id = ${id}`;
+    if (username !== undefined) await sql`UPDATE users SET username = ${username} WHERE id = ${id}`;
 
     if (password && password.length >= 6) {
-      const isParent = data.users[index].role === "parent";
-      data.users[index].password = isParent ? password : await bcrypt.hash(password, SALT_ROUNDS);
+      const hashed = user.role === "parent"
+        ? password
+        : await bcrypt.hash(password, SALT_ROUNDS);
+      await sql`UPDATE users SET password = ${hashed} WHERE id = ${id}`;
     }
 
-    data.users[index].loginAttempts = 0;
-    data.users[index].lockedUntil = undefined;
+    await sql`UPDATE users SET login_attempts = 0, locked_until = NULL WHERE id = ${id}`;
 
-    await writeUsers(data);
-    return NextResponse.json({ success: true, user: sanitizeUser(data.users[index]) });
+    if (user.role === "parent" && classes !== undefined) {
+      await sql`DELETE FROM parent_classes WHERE parent_id = ${id}`;
+      for (const className of classes) {
+        await sql`
+          INSERT INTO parent_classes (parent_id, class_name)
+          VALUES (${id}, ${className})
+          ON CONFLICT DO NOTHING
+        `;
+      }
+    }
+
+    const updated = await sql`SELECT * FROM users WHERE id = ${id}`;
+    const updatedClasses = user.role === "parent" ? await getParentClasses(id) : [];
+
+    return NextResponse.json({
+      success: true,
+      user: { ...sanitizeUser(updated[0] as User), classes: updatedClasses },
+    });
   } catch (err) {
     console.error("PUT /api/users:", err);
     return NextResponse.json({ success: false, error: "Failed to update user" }, { status: 500 });
   }
 }
 
-// ─── DELETE — remove user (admin only) ───────────────────────────────────────
+// ─── DELETE — remove user ─────────────────────────────────────────────────────
 export async function DELETE(req: NextRequest) {
   try {
+    await initializeDatabase();
+
     if (!verifyAdminRequest(req)) {
       return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
     }
@@ -276,18 +312,18 @@ export async function DELETE(req: NextRequest) {
       return NextResponse.json({ success: false, error: "User ID required" }, { status: 400 });
     }
 
-    const data = await readUsers();
-    const user = data.users.find((u) => u.id === id);
-
-    if (!user) {
+    const rows = await sql`SELECT * FROM users WHERE id = ${id}`;
+    if (rows.length === 0) {
       return NextResponse.json({ success: false, error: "User not found" }, { status: 404 });
     }
+
+    const user = rows[0] as User;
     if (user.username === "admin") {
       return NextResponse.json({ success: false, error: "Cannot delete main admin" }, { status: 403 });
     }
 
-    data.users = data.users.filter((u) => u.id !== id);
-    await writeUsers(data);
+    // parent_classes deleted automatically via CASCADE
+    await sql`DELETE FROM users WHERE id = ${id}`;
 
     return NextResponse.json({ success: true });
   } catch (err) {
